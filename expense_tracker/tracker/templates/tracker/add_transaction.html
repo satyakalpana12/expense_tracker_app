@@ -1,0 +1,31 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+
+<h2>Add Transaction</h2>
+
+<div class="card p-4 shadow-sm">
+  <form method="POST">
+    {% csrf_token %}
+    <label class="mt-2">Amount</label>
+    <input type="number" name="amount" class="form-control" required>
+
+    <label class="mt-2">Category</label>
+    <input type="text" name="category" class="form-control" required>
+
+    <label class="mt-2">Date</label>
+    <input type="date" name="date" class="form-control" required>
+
+    <label class="mt-2">Type</label>
+    <select name="type" class="form-control">
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+    </select>
+
+    <label class="mt-2">Note (optional)</label>
+    <textarea name="note" class="form-control"></textarea>
+
+    <button class="btn btn-success mt-3">Add</button>
+  </form>
+</div>
+
+{% endblock %}

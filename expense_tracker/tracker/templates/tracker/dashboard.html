@@ -1,0 +1,77 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row text-center mb-4">
+  <div class="col-md-4">
+    <div class="card shadow-sm p-3 border-success">
+      <h5>Total Income</h5>
+      <h3 class="text-success">₹ {{ income }}</h3>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm p-3 border-danger">
+      <h5>Total Expense</h5>
+      <h3 class="text-danger">₹ {{ expense }}</h3>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm p-3 border-primary">
+      <h5>Balance</h5>
+      <h3 class="text-primary">₹ {{ balance }}</h3>
+    </div>
+  </div>
+</div>
+
+<h4 class="mb-3">Recent Transactions</h4>
+<table class="table table-striped shadow-sm bg-white">
+  <thead class="table-dark">
+    <tr>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Date</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in transactions %}
+    <tr>
+      <td>{{ t.type }}</td>
+      <td>₹ {{ t.amount }}</td>
+      <td>{{ t.category }}</td>
+      <td>{{ t.date }}</td>
+      <td>{{ t.note }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4 class="mt-5">Expense Breakdown (Category Wise)</h4>
+
+<div style="width: 300px; margin: auto;">   <!-- Change 250px to the size you want -->
+  <canvas id="expenseChart"></canvas>
+</div>
+
+<!-- <canvas id="expenseChart" width="50" height="50"></canvas> -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const labels = {{ labels|safe }};
+    const data = {{ data|safe }};
+
+    new Chart(document.getElementById('expenseChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data
+            }]
+        }
+    });
+</script>
+
+
+{% endblock %}
